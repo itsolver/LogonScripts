@@ -53,7 +53,12 @@ Register-ScheduledTask -TaskName "OM-LogonScript" -Action $action -Trigger $trig
      - Uninstall command: `powershell.exe -executionpolicy bypass -file OM-uninstall-logon-script.ps1`
      - Install behavior: System
      - Device restart behavior: No specific action
-   - Set up detection rules as needed (e.g., presence of the scheduled task).
+   - Set up detection rules as follows:
+     - Rule Type: File
+     - Path: C:\ProgramData\OptimumMovement\
+     - File or folder: OM-LogonScript.ps1
+     - Detection method: File or folder exists
+     - Associated with a 32-bit app on 64-bit clients: No
    - Configure assignments to deploy the app to your devices.
 
 ## How it works
