@@ -1,4 +1,4 @@
-$scriptUrl = 'https://raw.githubusercontent.com/itsolver/LogonScripts/refs/heads/main/OptimumMovement/OM-LogonScript.ps1'
+$scriptUrl = 'https://raw.githubusercontent.com/itsolver/LogonScripts/refs/heads/main/OptimumMovement/src/OM-LogonScript.ps1'
 $localPath = 'C:\ProgramData\OptimumMovement\OM-LogonScript.ps1'
 
 # Create directory if it doesn't exist
