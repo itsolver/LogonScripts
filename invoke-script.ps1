@@ -1,4 +1,4 @@
-$githubScriptUrl = 'https://raw.githubusercontent.com/itsolver/LogonScripts/refs/heads/main/OptimumMovement/OM-LogonScript.ps1'
+$githubScriptUrl = 'https://raw.githubusercontent.com/itsolver/LogonScripts/refs/heads/main/LogonScript.ps1'
 $regKeyLocation = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Run'
 $psCommand = "PowerShell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -Command `"& {Invoke-RestMethod '$githubScriptUrl' | Invoke-Expression}`""
 
