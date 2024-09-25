@@ -66,9 +66,9 @@ Register-ScheduledTask -TaskName "OM-LogonScript" -Action $action -Trigger $trig
 1. The Intune-deployed Win32 app runs `OM-install-logon-script.ps1` in system context:
    - Downloads the main script (`OM-LogonScript.ps1`) to a local path
    - Creates a scheduled task to run the main script at each user logon
-   - Runs the main script immediately
+   - Attempts to run the main script immediately (see note below)
 
-2. The scheduled task ensures `OM-LogonScript.ps1` runs for all users at logon.
+2. The scheduled task ensures `OM-LogonScript.ps1` runs for all users at subsequent logons.
 
 3. You can update `OM-LogonScript.ps1` in your repository without needing to redeploy through Intune.
 
@@ -80,3 +80,8 @@ Register-ScheduledTask -TaskName "OM-LogonScript" -Action $action -Trigger $trig
 - Regularly review and update `OM-LogonScript.ps1` to maintain security and functionality.
 - The Win32 app approach allows for more granular control over installation, uninstallation, and detection methods.
 - Note that this method loses the ability to centrally manage the logon script in GitHub after the initial installation. The script is downloaded only once during the Win32 app installation, so any updates to the GitHub version won't automatically propagate to installed instances. To update the script on deployed machines, you would need to redeploy the Win32 app or implement an additional update mechanism.
+
+- The script does not execute on the first logon after installation. It will run on every logon thereafter due to the scheduled task.
+- The immediate execution of the script during installation may not work as intended because it runs in system context, not user context.
+- To ensure the script runs for all users, including on the first logon, users may need to log out and log back in after the initial installation.
+- Consider informing users or IT staff that a logout/login cycle may be necessary after the initial installation for the script to take effect.
