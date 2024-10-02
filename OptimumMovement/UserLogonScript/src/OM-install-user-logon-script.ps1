@@ -3,9 +3,10 @@ Unregister-ScheduledTask -TaskName "OM-LogonScript" -Confirm:$false -ErrorAction
 
 $scriptUrl = 'https://raw.githubusercontent.com/itsolver/LogonScripts/refs/heads/main/OptimumMovement/UserLogonScript/src/OM-UserLogonScript.ps1'
 $wrapperScriptPath = 'C:\ProgramData\OptimumMovement\OM-UserLogonWrapper.ps1'
+$scriptDirectory = Split-Path $wrapperScriptPath
 
 # Create directory if it doesn't exist
-New-Item -ItemType Directory -Force -Path (Split-Path $wrapperScriptPath)
+New-Item -ItemType Directory -Force -Path $scriptDirectory
 
 # Create the wrapper script
 $wrapperScriptContent = @"
