@@ -24,13 +24,17 @@ $edgeShortcutPath = Join-Path $publicDesktopPath 'Microsoft Edge.lnk'
 
 if (Test-Path $edgeShortcutPath) {
     try {
-        # Hide the shortcut
         $file = Get-Item $edgeShortcutPath
-        $file.Attributes = $file.Attributes -bor [System.IO.FileAttributes]::Hidden
-        Write-Log 'Microsoft Edge shortcut has been hidden on the public desktop.'
+        if (-not ($file.Attributes -band [System.IO.FileAttributes]::Hidden)) {
+            # Hide the shortcut only if it's not already hidden
+            $file.Attributes = $file.Attributes -bor [System.IO.FileAttributes]::Hidden
+            Write-Log 'Microsoft Edge shortcut has been hidden on the public desktop.'
+        } else {
+            Write-Log 'Microsoft Edge shortcut is already hidden on the public desktop.'
+        }
     }
     catch {
-        Write-Log "Failed to hide Microsoft Edge shortcut: $_" 'ERROR'
+        Write-Log "Failed to process Microsoft Edge shortcut: $_" 'ERROR'
     }
 }
 else {
