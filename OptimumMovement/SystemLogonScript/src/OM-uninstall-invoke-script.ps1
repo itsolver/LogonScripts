@@ -1,8 +1,8 @@
 # Remove the scheduled task
-Unregister-ScheduledTask -TaskName 'OM-LogonScript' -Confirm:$false
+Unregister-ScheduledTask -TaskName 'OM-SystemLogonScript' -Confirm:$false
 
 # Remove the downloaded script
-$localPath = 'C:\ProgramData\OptimumMovement\OM-LogonScript.ps1'
+$localPath = 'C:\ProgramData\OptimumMovement\OM-SystemLogonScript.ps1'
 Remove-Item -Path $localPath -Force -ErrorAction SilentlyContinue
 
 # Remove the OptimumMovement directory if it's empty
