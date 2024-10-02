@@ -22,26 +22,29 @@ Write-Log 'Script execution started.'
 $publicDesktopPath = [Environment]::GetFolderPath('CommonDesktopDirectory')
 $edgeShortcutPath = Join-Path $publicDesktopPath 'Microsoft Edge.lnk'
 
+Write-Log "Checking for Edge shortcut at: $edgeShortcutPath"
+
 if (Test-Path $edgeShortcutPath) {
-    if (Test-Path $edgeShortcutPath -PathType Leaf) {
-        try {
-            $file = Get-Item $edgeShortcutPath
-            if (-not ($file.Attributes -band [System.IO.FileAttributes]::Hidden)) {
-                # Hide the shortcut only if it's not already hidden
-                $file.Attributes = $file.Attributes -bor [System.IO.FileAttributes]::Hidden
-                Write-Log 'Microsoft Edge shortcut has been hidden on the public desktop.'
-            } else {
-                Write-Log 'Microsoft Edge shortcut is already hidden on the public desktop.'
-            }
+    Write-Log "Edge shortcut found."
+    try {
+        $file = Get-Item $edgeShortcutPath -Force
+        Write-Log "File attributes: $($file.Attributes)"
+        
+        if ($file.Attributes -band [System.IO.FileAttributes]::Hidden) {
+            Write-Log "Microsoft Edge shortcut is already hidden on the public desktop."
+        } else {
+            Write-Log "Attempting to hide the Microsoft Edge shortcut."
+            $file.Attributes = $file.Attributes -bor [System.IO.FileAttributes]::Hidden
+            Write-Log "Microsoft Edge shortcut has been hidden on the public desktop."
         }
-        catch {
-            Write-Log "Failed to process Microsoft Edge shortcut: $_" 'ERROR'
-        }
-    } else {
-        Write-Log 'Microsoft Edge shortcut exists but is not a file.' 'WARNING'
+    }
+    catch {
+        Write-Log "Failed to process Microsoft Edge shortcut: $_" 'ERROR'
+        Write-Log "Exception details: $($_.Exception.GetType().FullName)" 'ERROR'
+        Write-Log "Stack trace: $($_.ScriptStackTrace)" 'ERROR'
     }
 } else {
-    Write-Log 'Microsoft Edge shortcut not found on the public desktop.'
+    Write-Log "Microsoft Edge shortcut not found at the expected location."
 }
 
 # End of script
