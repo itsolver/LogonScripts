@@ -1,5 +1,8 @@
 # Delete deprecated scheduled task
-Unregister-ScheduledTask -TaskName "OM-LogonScript" -Confirm:$false -ErrorAction SilentlyContinue
+Unregister-ScheduledTask -TaskName 'OM-LogonScript' -Confirm:$false -ErrorAction SilentlyContinue
+
+# Delete old script from file system
+Remove-Item -Path 'C:\ProgramData\OptimumMovement\OM-LogonScript.ps1' -Force -ErrorAction SilentlyContinue
 
 $scriptUrl = 'https://raw.githubusercontent.com/itsolver/LogonScripts/refs/heads/main/OptimumMovement/UserLogonScript/src/OM-UserLogonScript.ps1'
 $wrapperScriptPath = 'C:\ProgramData\OptimumMovement\OM-UserLogonWrapper.ps1'
@@ -49,11 +52,11 @@ Register-ScheduledTask -TaskName 'OM-UserLogonScript' -Action $action -Trigger $
 
 # Set file permissions to allow only administrators and the user access
 $acl = Get-Acl $scriptDirectory
-$administrators = [System.Security.Principal.NTAccount]"Administrators"
+$administrators = [System.Security.Principal.NTAccount]'Administrators'
 $user = [System.Security.Principal.NTAccount]([System.Security.Principal.WindowsIdentity]::GetCurrent().Name)
 
-$accessRule1 = New-Object System.Security.AccessControl.FileSystemAccessRule($administrators, "FullControl", "ContainerInherit, ObjectInherit", "None", "Allow")
-$accessRule2 = New-Object System.Security.AccessControl.FileSystemAccessRule($user, "ReadAndExecute", "ContainerInherit, ObjectInherit", "None", "Allow")
+$accessRule1 = New-Object System.Security.AccessControl.FileSystemAccessRule($administrators, 'FullControl', 'ContainerInherit, ObjectInherit', 'None', 'Allow')
+$accessRule2 = New-Object System.Security.AccessControl.FileSystemAccessRule($user, 'ReadAndExecute', 'ContainerInherit, ObjectInherit', 'None', 'Allow')
 
 $acl.SetAccessRuleProtection($True, $False)
 $acl.ResetAccessRule($accessRule1)
