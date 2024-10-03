@@ -32,7 +32,7 @@ Last Updated: 03 Oct 2024
    - Detection rules:
      - Rule Type: File
      - Path: C:\ProgramData\OptimumMovement\
-     - File or folder: OM-LogonScript.ps1
+     - File or folder: OM-UserLogonWrapper.ps1
      - Detection method: File or folder exists
      - Associated with a 32-bit app on 64-bit clients: No
    - Assign to your devices.
@@ -40,19 +40,19 @@ Last Updated: 03 Oct 2024
 ## How it works
 
 1. Intune-deployed Win32 app runs `OM-install-user-logon-script.ps1` in system context:
-   - Downloads `OM-LogonScript.ps1` locally
+   - Downloads `OM-install-user-logon-script.ps1` locally
    - Creates a scheduled task for user logon
    - Attempts immediate script execution
 
-2. Scheduled task runs `OM-LogonScript.ps1` for all users at subsequent logons.
+2. Scheduled task runs `OM-install-user-logon-script.ps1` for all users at subsequent logons.
 
-3. Update `OM-LogonScript.ps1` in your repository without Intune redeployment.
+3. Update `OM-install-user-logon-script.ps1` in your repository without Intune redeployment.
 
 ## Important Notes
 
 - System context installation applies to all users, including local accounts.
 - Scheduled task runs with standard user privileges for security.
-- Regularly update `OM-LogonScript.ps1` for security and functionality.
+- Regularly update `OM-install-user-logon-script.ps1` for security and functionality.
 - Win32 app allows granular control over installation, uninstallation, and detection.
 - Updates to GitHub version won't automatically propagate. Implement an update mechanism or redeploy for changes.
 - Script doesn't execute on first logon after installation. Runs on subsequent logons via scheduled task.
