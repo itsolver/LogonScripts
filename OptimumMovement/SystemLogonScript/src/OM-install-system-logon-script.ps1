@@ -1,3 +1,17 @@
+<#
+.SYNOPSIS
+    Installs the OptimumMovement system logon script.
+.DESCRIPTION
+    This script installs and configures the system logon script for OptimumMovement.
+.NOTES
+    Version: 1.1
+    Author: IT Solver
+    Last Modified: 03 Oct 2024
+#>
+
+$scriptVersion = '1.1'
+Write-Host "OM-install-system-logon-script version $scriptVersion started."
+
 $scriptUrl = 'https://raw.githubusercontent.com/itsolver/LogonScripts/refs/heads/main/OptimumMovement/SystemLogonScript/src/OM-SystemLogonScript.ps1'
 $wrapperScriptPath = 'C:\ProgramData\OptimumMovement\OM-SystemLogonWrapper.ps1'
 $scriptDirectory = Split-Path $wrapperScriptPath
@@ -35,11 +49,11 @@ Set-Content -Path $wrapperScriptPath -Value $wrapperScriptContent -Force -Encodi
 
 # Set strict file permissions
 $acl = Get-Acl $scriptDirectory
-$administrators = [System.Security.Principal.NTAccount]"Administrators"
-$system = [System.Security.Principal.NTAccount]"SYSTEM"
+$administrators = [System.Security.Principal.NTAccount]'Administrators'
+$system = [System.Security.Principal.NTAccount]'SYSTEM'
 
-$accessRule1 = New-Object System.Security.AccessControl.FileSystemAccessRule($administrators, "FullControl", "ContainerInherit, ObjectInherit", "None", "Allow")
-$accessRule2 = New-Object System.Security.AccessControl.FileSystemAccessRule($system, "FullControl", "ContainerInherit, ObjectInherit", "None", "Allow")
+$accessRule1 = New-Object System.Security.AccessControl.FileSystemAccessRule($administrators, 'FullControl', 'ContainerInherit, ObjectInherit', 'None', 'Allow')
+$accessRule2 = New-Object System.Security.AccessControl.FileSystemAccessRule($system, 'FullControl', 'ContainerInherit, ObjectInherit', 'None', 'Allow')
 
 $acl.SetAccessRuleProtection($True, $False) # Disable inheritance
 $acl.ResetAccessRule($accessRule1)
@@ -57,3 +71,5 @@ Register-ScheduledTask -TaskName 'OM-SystemLogonScript' -Action $action -Trigger
 
 # Run the wrapper script immediately
 & $wrapperScriptPath
+
+Write-Host "OM-install-system-logon-script version $scriptVersion completed."

@@ -1,6 +1,7 @@
 # Intune System Logon Script Deployment
 
-This method deploys system-wide logon scripts using Intune, applying the configuration for all users on a computer.
+Version: 1.1
+Last Updated: 03 Oct 2024
 
 ## Deployment Instructions
 
@@ -54,4 +55,10 @@ This method deploys system-wide logon scripts using Intune, applying the configu
 - Updates to GitHub version won't automatically propagate. Implement an update mechanism or redeploy for changes.
 - Script may not execute immediately after installation. Runs on subsequent system startups via scheduled task.
 - Consider informing IT staff about potential system restart requirements for script activation.
+
+
+## Version History
+
+- 1.1 - 03 Oct 2024: Added versioning information
+- 1.0 - [Initial Date]: Initial release
 

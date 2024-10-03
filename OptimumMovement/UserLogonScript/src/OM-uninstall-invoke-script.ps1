@@ -1,3 +1,17 @@
+<#
+.SYNOPSIS
+    Uninstalls the OptimumMovement logon script.
+.DESCRIPTION
+    This script removes the OptimumMovement logon script and associated components.
+.NOTES
+    Version: 1.1
+    Author: IT Solver
+    Last Modified: 03 Oct 2024
+#>
+
+$scriptVersion = '1.1'
+Write-Host "OM-uninstall-invoke-script version $scriptVersion started."
+
 # Remove the scheduled task
 Unregister-ScheduledTask -TaskName 'OM-UserLogonScript' -Confirm:$false
 
@@ -14,4 +28,4 @@ if (Test-Path $directoryPath) {
     }
 }
 
-Write-Host 'OptimumMovement LogonScript has been uninstalled.'
+Write-Host "OM-uninstall-invoke-script version $scriptVersion completed."

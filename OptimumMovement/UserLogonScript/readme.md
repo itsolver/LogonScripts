@@ -1,6 +1,7 @@
 # Intune Logon Script Deployment with Limited Licensing
 
-This method deploys logon scripts using a single Intune license, applying the configuration for all users on a computer.
+Version: 1.1
+Last Updated: 03 Oct 2024
 
 ## Deployment Instructions
 
@@ -58,3 +59,8 @@ This method deploys logon scripts using a single Intune license, applying the co
 - Immediate execution during installation may not work as intended (system vs. user context).
 - Users may need to log out and back in after initial installation for the script to take effect.
 - Consider informing users or IT staff about the necessary logout/login cycle.
+
+## Version History
+
+- 1.1 - 03 Oct 2024: Added versioning information
+- 1.0 - [Initial Date]: Initial release

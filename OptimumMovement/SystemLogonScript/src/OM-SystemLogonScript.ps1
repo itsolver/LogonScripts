@@ -15,8 +15,8 @@ function Write-Log {
     Add-Content -Path $logFilePath -Value $entry
 }
 
-# Start of script
-Write-Log 'Script execution started.'
+$scriptVersion = '1.1'
+Write-Log "OM-SystemLogonScript version $scriptVersion started."
 
 # Hide Microsoft Edge public desktop shortcut
 $publicDesktopPath = [Environment]::GetFolderPath('CommonDesktopDirectory')
@@ -25,17 +25,18 @@ $edgeShortcutPath = Join-Path $publicDesktopPath 'Microsoft Edge.lnk'
 Write-Log "Checking for Edge shortcut at: $edgeShortcutPath"
 
 if (Test-Path $edgeShortcutPath) {
-    Write-Log "Edge shortcut found."
+    Write-Log 'Edge shortcut found.'
     try {
         $file = Get-Item $edgeShortcutPath -Force
         Write-Log "File attributes: $($file.Attributes)"
         
         if ($file.Attributes -band [System.IO.FileAttributes]::Hidden) {
-            Write-Log "Microsoft Edge shortcut is already hidden on the public desktop."
-        } else {
-            Write-Log "Attempting to hide the Microsoft Edge shortcut."
+            Write-Log 'Microsoft Edge shortcut is already hidden on the public desktop.'
+        }
+        else {
+            Write-Log 'Attempting to hide the Microsoft Edge shortcut.'
             $file.Attributes = $file.Attributes -bor [System.IO.FileAttributes]::Hidden
-            Write-Log "Microsoft Edge shortcut has been hidden on the public desktop."
+            Write-Log 'Microsoft Edge shortcut has been hidden on the public desktop.'
         }
     }
     catch {
@@ -43,9 +44,9 @@ if (Test-Path $edgeShortcutPath) {
         Write-Log "Exception details: $($_.Exception.GetType().FullName)" 'ERROR'
         Write-Log "Stack trace: $($_.ScriptStackTrace)" 'ERROR'
     }
-} else {
-    Write-Log "Microsoft Edge shortcut not found at the expected location."
+}
+else {
+    Write-Log 'Microsoft Edge shortcut not found at the expected location.'
 }
 
-# End of script
-Write-Log 'Script execution completed.'
+Write-Log "OM-SystemLogonScript version $scriptVersion completed."

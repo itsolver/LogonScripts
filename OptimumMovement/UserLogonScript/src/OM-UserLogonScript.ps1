@@ -1,15 +1,13 @@
 <#
-Version: 1.0
-Author: 
-- Jeroen Burgerhout (burgerhout.org)
-Script: Remove-OutlookNew
-Description: Script removes the new Microsoft Outlook app on Windows 11 23H2.
-Hint: This is a community script. There is no guarantee for this. Please check thoroughly before running.
-Version 1.0: Init
-Run this script using the logged-on credentials: Yes
-Enforce script signature check: No
-Run script in 64-bit PowerShell: Yes
-#> 
+.SYNOPSIS
+    User logon script for OptimumMovement.
+.DESCRIPTION
+    This script runs at user logon and performs various tasks.
+.NOTES
+    Version: 1.1
+    Author: IT Solver
+    Last Modified: 03 Oct 2024
+#>
 
 # Define the log file path
 $logFilePath = 'C:\Logs\OM-UserLogonScript.log'
@@ -42,4 +40,10 @@ catch {
 
 # End of script
 Write-Log 'Script execution completed.'
+
+# Script content starts here
+$scriptVersion = '1.1'
+Write-Log "OM-UserLogonScript version $scriptVersion started."
+
+Write-Log "OM-UserLogonScript version $scriptVersion completed."
 
