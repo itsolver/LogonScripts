@@ -18,6 +18,28 @@ function Write-Log {
 $scriptVersion = '1.2'
 Write-Log "OM-SystemLogonScript version $scriptVersion started."
 
+# Copy Google Drive shortcut to Public Desktop and Public Startup folder
+$sourcePath = 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Google Drive.lnk'
+$publicDesktopPath = [System.Environment]::GetFolderPath('CommonDesktopDirectory')
+$publicStartupPath = "$env:ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp"
+
+if (Test-Path $sourcePath) {
+    try {
+        Copy-Item -Path $sourcePath -Destination $publicDesktopPath -Force
+        Write-Host 'Google Drive shortcut successfully copied to Public Desktop.'
+        
+        Copy-Item -Path $sourcePath -Destination $publicStartupPath -Force
+        Write-Host 'Google Drive shortcut successfully copied to Public Startup folder.'
+    }
+    catch {
+        Write-Host "Error copying Google Drive shortcut: $_"
+    }
+}
+else {
+    Write-Host "Google Drive shortcut not found at '$sourcePath'."
+}
+
+
 # Prevent unwanted Chrome extensions from being pre-installed
 Write-Log 'Removing Chrome extension subkeys from registry.'
 $registryPath = 'HKLM:\Software\Wow6432Node\Google\Chrome\Extensions'
