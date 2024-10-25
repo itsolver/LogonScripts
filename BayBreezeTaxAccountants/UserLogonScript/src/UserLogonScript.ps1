@@ -31,16 +31,6 @@ function Write-Log {
 # Start of script
 Write-Log "UserLogonScript v$scriptVersion execution started."
 
-# Right-click: Remove Windows 11 new context menu
-Write-Log 'Attempting to modify right-click context menu...'
-reg.exe add 'HKCU\SOFTWARE\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32' /f /ve /reg:64 | Out-Null
-if ($LASTEXITCODE -eq 0) {
-    Write-Log 'Right-click context menu modified successfully.'
-}
-else {
-    Write-Log 'Failed to modify right-click context menu.' 'ERROR'
-}
-
 # Remove Microsoft Outlook (New)
 Write-Log 'Attempting to remove Microsoft Outlook (New)...'
 try {
