@@ -15,19 +15,16 @@ $wrapperScriptContent = @"
 
 # Download the latest script
 try {
+    `$ProgressPreference = 'SilentlyContinue'    # Hide progress bar
     Invoke-WebRequest -Uri `$scriptUrl -OutFile `$tempScriptPath -ErrorAction Stop
 }
 catch {
-    Write-Error "Failed to download the latest script: `$($_)"
     exit 1
 }
 
-# Execute the script
+# Execute the script silently - correct argument order
 try {
-    & `$tempScriptPath
-}
-catch {
-    Write-Error "Error executing the script: `$($_)"
+    powershell.exe -NonInteractive -WindowStyle Hidden -ExecutionPolicy Bypass -File "`$tempScriptPath"
 }
 finally {
     Remove-Item `$tempScriptPath -Force -ErrorAction SilentlyContinue
@@ -37,7 +34,7 @@ finally {
 Set-Content -Path $wrapperScriptPath -Value $wrapperScriptContent -Force
 
 # Create a scheduled task
-$action = New-ScheduledTaskAction -Execute 'PowerShell.exe' -Argument "-ExecutionPolicy Bypass -File `"$wrapperScriptPath`""
+$action = New-ScheduledTaskAction -Execute 'PowerShell.exe' -Argument "-NonInteractive -WindowStyle Hidden -ExecutionPolicy Bypass -File `"$wrapperScriptPath`""
 $trigger = New-ScheduledTaskTrigger -AtLogOn
 $principal = New-ScheduledTaskPrincipal -GroupId 'Users' -RunLevel Limited
 $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
