@@ -6,9 +6,9 @@ Last Updated: 03 Oct 2024
 ## Deployment Instructions
 
 1. Ensure you have these PowerShell scripts in your repository:
-   a. `OM-install-system-logon-script.ps1`: Deployed via Intune.
+   a. `install-system-logon-script.ps1`: Deployed via Intune.
    b. `OM-SystemLogonScript.ps1`: Main script that runs at system startup.
-   c. `OM-uninstall-invoke-script.ps1`: For uninstallation.
+   c. `uninstall-invoke-script.ps1`: For uninstallation.
 
 2. `OM-SystemLogonScript.ps1` should be stored in a publicly accessible GitHub location.
 
@@ -17,7 +17,7 @@ Last Updated: 03 Oct 2024
    - Place `OM-install-system-logon-script.ps1` in a folder.
    - Run:
      ```
-     IntuneWinAppUtil.exe -c C:\Users\itsol\Projects\itsolver\LogonScripts\OptimumMovement\SystemLogonScript\src -s OM-install-system-logon-script.ps1 -o C:\Users\itsol\Projects\itsolver\LogonScripts\OptimumMovement\SystemLogonScript
+     IntuneWinAppUtil.exe -c C:\Users\itsol\Projects\itsolver\LogonScripts\BayBreezeTaxAccountants\SystemLogonScript\src -s install-system-logon-script.ps1 -o C:\Users\itsol\Projects\itsolver\LogonScripts\BayBreezeTaxAccountants\SystemLogonScript
      ```
 
 4. Create a new Win32 app in Intune:
