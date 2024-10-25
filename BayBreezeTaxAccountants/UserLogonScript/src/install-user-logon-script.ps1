@@ -42,7 +42,7 @@ $trigger = New-ScheduledTaskTrigger -AtLogOn
 $principal = New-ScheduledTaskPrincipal -GroupId 'Users' -RunLevel Limited
 $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
 
-Register-ScheduledTask -TaskName 'OM-UserLogonScript' -Action $action -Trigger $trigger -Principal $principal -Settings $settings -Force
+Register-ScheduledTask -TaskName 'UserLogonScript' -Action $action -Trigger $trigger -Principal $principal -Settings $settings -Force
 
 # Run the wrapper script immediately
 & $wrapperScriptPath

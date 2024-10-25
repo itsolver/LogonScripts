@@ -18,6 +18,39 @@ function Write-Log {
 $scriptVersion = '1.2'
 Write-Log "SystemLogonScript version $scriptVersion started."
 
+# Taskbar: Set search icon only
+try {
+    Write-Verbose 'Setting taskbar search icon'
+    reg.exe add 'HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search' /v SearchOnTaskbarMode /t REG_DWORD /d 1 /f | Out-Host
+    if ($LASTEXITCODE -ne 0) { throw 'Failed to set taskbar search icon' }
+    Write-Verbose 'Taskbar search icon set successfully'
+}
+catch {
+    Write-Log "Error occurred while setting taskbar search icon: $_" 'ERROR'
+    Write-Log "Exception details: $($_.Exception.GetType().FullName)" 'ERROR'
+    Write-Log "Stack trace: $($_.ScriptStackTrace)" 'ERROR'
+}
+
+# Taskbar: Disable weather and news widget
+try {
+    Write-Verbose 'Disabling weather and news taskbar widget'
+    $Path = 'HKLM:\SOFTWARE\Policies\Microsoft\Dsh'
+    $Key = 'AllowNewsAndInterests'
+    $KeyFormat = 'DWord'
+    $Value = '0'
+    if (!(Test-Path $Path)) { 
+        Write-Verbose "Creating new registry path: $Path"
+        New-Item -Path $Path -Force 
+    }
+    Set-ItemProperty -Path $Path -Name $Key -Value $Value -Type $KeyFormat
+    Write-Verbose 'Weather and news taskbar widget disabled'
+}
+catch {
+    Write-Log "Error occurred while disabling weather widget: $_" 'ERROR'
+    Write-Log "Exception details: $($_.Exception.GetType().FullName)" 'ERROR'
+    Write-Log "Stack trace: $($_.ScriptStackTrace)" 'ERROR'
+}
+
 # Prevent unwanted Chrome extensions from being pre-installed
 Write-Log 'Removing Chrome extension subkeys from registry.'
 $registryPath = 'HKLM:\Software\Wow6432Node\Google\Chrome\Extensions'

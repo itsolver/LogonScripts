@@ -31,6 +31,27 @@ function Write-Log {
 
 # Start of script
 Write-Log "UserLogonScript v$scriptVersion execution started."
+# Enable OneDrive auto-start
+try {
+    # Create/set registry key for OneDrive auto-start
+    $registryPath = 'HKCU:\Software\Policies\Microsoft\OneDrive'
+    if (!(Test-Path $registryPath)) {
+        New-Item -Path $registryPath -Force | Out-Null
+    }
+    Set-ItemProperty -Path $registryPath -Name 'EnableAutoStart' -Value 1 -Type DWord
+    Write-Log 'OneDrive auto-start successfully enabled.'
+}
+catch {
+    Write-Log "Error occurred while enabling OneDrive auto-start: $_" 'ERROR'
+    Write-Log "Exception details: $($_.Exception.GetType().FullName)" 'ERROR'
+    Write-Log "Stack trace: $($_.ScriptStackTrace)" 'ERROR'
+}
+
+# Right-click: Remove Windows 11 new context menu
+Write-Verbose 'Modifying right-click context menu'
+reg.exe add 'HKCU\SOFTWARE\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32' /f /ve /reg:64 | Out-Host
+if ($LASTEXITCODE -ne 0) { throw 'Failed to modify right-click context menu' }
+Write-Verbose 'Right-click context menu modified successfully'
 
 # Remove Microsoft Outlook (New)
 try {
