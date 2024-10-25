@@ -1,3 +1,6 @@
+# Script version
+$scriptVersion = '1.2'
+
 # Define the log file path
 $logFilePath = 'C:\Logs\OM-SystemLogonScript.log'
 
@@ -15,8 +18,8 @@ function Write-Log {
     Add-Content -Path $logFilePath -Value $entry
 }
 
-$scriptVersion = '1.2'
-Write-Log "OM-SystemLogonScript version $scriptVersion started."
+# Start of script
+Write-Log "OM-SystemLogonScript v$scriptVersion execution started."
 
 # Copy Google Drive shortcut to Public Desktop and Public Startup folder
 $sourcePath = 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Google Drive.lnk'
@@ -26,19 +29,20 @@ $publicStartupPath = "$env:ProgramData\Microsoft\Windows\Start Menu\Programs\Sta
 if (Test-Path $sourcePath) {
     try {
         Copy-Item -Path $sourcePath -Destination $publicDesktopPath -Force
-        Write-Host 'Google Drive shortcut successfully copied to Public Desktop.'
+        Write-Log 'Google Drive shortcut successfully copied to Public Desktop.'
         
         Copy-Item -Path $sourcePath -Destination $publicStartupPath -Force
-        Write-Host 'Google Drive shortcut successfully copied to Public Startup folder.'
+        Write-Log 'Google Drive shortcut successfully copied to Public Startup folder.'
     }
     catch {
-        Write-Host "Error copying Google Drive shortcut: $_"
+        Write-Log "Error occurred while copying Google Drive shortcut: $_" 'ERROR'
+        Write-Log "Exception details: $($_.Exception.GetType().FullName)" 'ERROR'
+        Write-Log "Stack trace: $($_.ScriptStackTrace)" 'ERROR'
     }
 }
 else {
-    Write-Host "Google Drive shortcut not found at '$sourcePath'."
+    Write-Log "Google Drive shortcut not found at '$sourcePath'." 'WARNING'
 }
-
 
 # Prevent unwanted Chrome extensions from being pre-installed
 Write-Log 'Removing Chrome extension subkeys from registry.'
@@ -92,16 +96,14 @@ if (Test-Path $edgeShortcutPath) {
         }
     }
     catch {
-        Write-Log "Failed to process Microsoft Edge shortcut: $_" 'ERROR'
+        Write-Log "Error occurred while processing Microsoft Edge shortcut: $_" 'ERROR'
         Write-Log "Exception details: $($_.Exception.GetType().FullName)" 'ERROR'
         Write-Log "Stack trace: $($_.ScriptStackTrace)" 'ERROR'
     }
 }
 else {
-    Write-Log 'Microsoft Edge shortcut not found at the expected location.'
+    Write-Log 'Microsoft Edge shortcut not found at the expected location.' 'WARNING'
 }
 
-Write-Log "OM-SystemLogonScript version $scriptVersion completed."
-
-
-Write-Log "OM-SystemLogonScript version $scriptVersion completed."
+# End of script
+Write-Log "OM-SystemLogonScript v$scriptVersion execution completed."

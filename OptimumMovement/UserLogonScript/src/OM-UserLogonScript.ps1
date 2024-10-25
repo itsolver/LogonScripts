@@ -9,6 +9,9 @@
     Last Modified: 03 Oct 2024
 #>
 
+# Script version
+$scriptVersion = '1.1'
+
 # Define the log file path
 $logFilePath = 'C:\Logs\OM-UserLogonScript.log'
 
@@ -27,7 +30,7 @@ function Write-Log {
 }
 
 # Start of script
-Write-Log 'Script execution started.'
+Write-Log "OM-UserLogonScript v$scriptVersion execution started."
 
 # Remove Microsoft Outlook (New)
 try {
@@ -35,15 +38,15 @@ try {
     Write-Log 'Microsoft Outlook (New) successfully removed.'
 }
 catch {
-    Write-Log "Error removing Microsoft Outlook (New): $_" 'ERROR'
+    Write-Log "Error occurred while removing Microsoft Outlook (New): $_" 'ERROR'
+    Write-Log "Exception details: $($_.Exception.GetType().FullName)" 'ERROR'
+    Write-Log "Stack trace: $($_.ScriptStackTrace)" 'ERROR'
 }
 
 # End of script
-Write-Log 'Script execution completed.'
+Write-Log "OM-UserLogonScript v$scriptVersion execution completed."
 
 # Script content starts here
-$scriptVersion = '1.1'
 Write-Log "OM-UserLogonScript version $scriptVersion started."
 
 Write-Log "OM-UserLogonScript version $scriptVersion completed."
-
