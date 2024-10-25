@@ -1,11 +1,8 @@
 # Delete deprecated scheduled task
-Unregister-ScheduledTask -TaskName 'OM-LogonScript' -Confirm:$false -ErrorAction SilentlyContinue
+Unregister-ScheduledTask -TaskName 'LogonScript' -Confirm:$false -ErrorAction SilentlyContinue
 
-# Delete old script from file system
-Remove-Item -Path 'C:\ProgramData\OptimumMovement\OM-LogonScript.ps1' -Force -ErrorAction SilentlyContinue
-
-$scriptUrl = 'https://raw.githubusercontent.com/itsolver/LogonScripts/refs/heads/main/OptimumMovement/UserLogonScript/src/OM-UserLogonScript.ps1'
-$wrapperScriptPath = 'C:\ProgramData\OptimumMovement\OM-UserLogonWrapper.ps1'
+$scriptUrl = 'https://raw.githubusercontent.com/itsolver/LogonScripts/refs/heads/main/BayBreezeTaxAccountants/UserLogonScript/src/UserLogonScript.ps1'
+$wrapperScriptPath = 'C:\ProgramData\ITSolver\UserLogonWrapper.ps1'
 $scriptDirectory = Split-Path $wrapperScriptPath
 
 # Create directory if it doesn't exist
@@ -14,7 +11,7 @@ New-Item -ItemType Directory -Force -Path $scriptDirectory
 # Create the wrapper script
 $wrapperScriptContent = @"
 `$scriptUrl = '$scriptUrl'
-`$tempScriptPath = Join-Path `$env:TEMP 'OM-UserLogonScript.ps1'
+`$tempScriptPath = Join-Path `$env:TEMP 'UserLogonScript.ps1'
 
 # Download the latest script
 try {

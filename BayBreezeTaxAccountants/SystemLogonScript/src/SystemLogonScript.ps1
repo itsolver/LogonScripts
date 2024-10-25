@@ -1,5 +1,5 @@
 # Define the log file path
-$logFilePath = 'C:\Logs\OM-SystemLogonScript.log'
+$logFilePath = 'C:\ProgramData\ITSolver\SystemLogonScript.log'
 
 # Ensure the log directory exists
 New-Item -ItemType Directory -Force -Path (Split-Path $logFilePath) | Out-Null
@@ -16,7 +16,7 @@ function Write-Log {
 }
 
 $scriptVersion = '1.2'
-Write-Log "OM-SystemLogonScript version $scriptVersion started."
+Write-Log "SystemLogonScript version $scriptVersion started."
 
 # Prevent unwanted Chrome extensions from being pre-installed
 Write-Log 'Removing Chrome extension subkeys from registry.'
@@ -48,4 +48,4 @@ catch {
     Write-Log "Stack trace: $($_.ScriptStackTrace)" 'ERROR'
 }
 
-Write-Log "OM-SystemLogonScript version $scriptVersion completed."
+Write-Log "SystemLogonScript version $scriptVersion completed."

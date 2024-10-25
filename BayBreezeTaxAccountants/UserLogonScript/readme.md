@@ -1,6 +1,6 @@
 # Intune Logon Script Deployment with Limited Licensing
 
-Version: 1.1
+Version: 1.2
 Last Updated: 03 Oct 2024
 
 ## Deployment Instructions
@@ -31,7 +31,7 @@ Last Updated: 03 Oct 2024
      - Device restart behavior: No specific action
    - Detection rules:
      - Rule Type: File
-     - Path: C:\ProgramData\OptimumMovement\
+     - Path: C:\ProgramData\ITSolver\
      - File or folder: UserLogonWrapper.ps1
      - Detection method: File or folder exists
      - Associated with a 32-bit app on 64-bit clients: No
@@ -62,5 +62,6 @@ Last Updated: 03 Oct 2024
 
 ## Version History
 
+- 1.2 - 25 Oct 2024: Repurpose OptimumMovement script for BayBreezeTaxAccountants
 - 1.1 - 03 Oct 2024: Added versioning information
 - 1.0 - [Initial Date]: Initial release

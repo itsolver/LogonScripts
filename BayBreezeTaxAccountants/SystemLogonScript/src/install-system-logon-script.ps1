@@ -1,19 +1,18 @@
 <#
 .SYNOPSIS
-    Installs the OptimumMovement system logon script.
+    Installs the system logon script.
 .DESCRIPTION
-    This script installs and configures the system logon script for OptimumMovement.
+    This script installs and configures the system logon script for BayBreezeTaxAccountants.
 .NOTES
-    Version: 1.1
     Author: IT Solver
     Last Modified: 03 Oct 2024
 #>
 
-$scriptVersion = '1.1'
-Write-Host "OM-install-system-logon-script version $scriptVersion started."
+$scriptVersion = '1.2'
+Write-Host "install-system-logon-script version $scriptVersion started."
 
-$scriptUrl = 'https://raw.githubusercontent.com/itsolver/LogonScripts/refs/heads/main/OptimumMovement/SystemLogonScript/src/OM-SystemLogonScript.ps1'
-$wrapperScriptPath = 'C:\ProgramData\OptimumMovement\OM-SystemLogonWrapper.ps1'
+$scriptUrl = 'https://raw.githubusercontent.com/itsolver/LogonScripts/refs/heads/main/BayBreezeTaxAccountants/SystemLogonScript/src/SystemLogonScript.ps1'
+$wrapperScriptPath = 'C:\ProgramData\ITSolver\SystemLogonWrapper.ps1'
 $scriptDirectory = Split-Path $wrapperScriptPath
 
 # Create directory if it doesn't exist
@@ -67,9 +66,9 @@ $trigger = New-ScheduledTaskTrigger -AtLogOn
 $principal = New-ScheduledTaskPrincipal -UserId 'SYSTEM' -LogonType ServiceAccount -RunLevel Highest
 $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
 
-Register-ScheduledTask -TaskName 'OM-SystemLogonScript' -Action $action -Trigger $trigger -Principal $principal -Settings $settings -Force
+Register-ScheduledTask -TaskName 'SystemLogonScript' -Action $action -Trigger $trigger -Principal $principal -Settings $settings -Force
 
 # Run the wrapper script immediately
 & $wrapperScriptPath
 
-Write-Host "OM-install-system-logon-script version $scriptVersion completed."
+Write-Host "install-system-logon-script version $scriptVersion completed."

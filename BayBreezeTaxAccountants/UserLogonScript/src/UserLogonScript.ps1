@@ -10,10 +10,10 @@
 #>
 
 # Script version
-$scriptVersion = '1.1'
+$scriptVersion = '1.2'
 
 # Define the log file path
-$logFilePath = 'C:\Logs\OM-UserLogonScript.log'
+$logFilePath = 'C:\ProgramData\ITSolver\UserLogonScript.log'
 
 # Ensure the log directory exists
 New-Item -ItemType Directory -Force -Path (Split-Path $logFilePath) | Out-Null
@@ -30,7 +30,7 @@ function Write-Log {
 }
 
 # Start of script
-Write-Log "OM-UserLogonScript v$scriptVersion execution started."
+Write-Log "UserLogonScript v$scriptVersion execution started."
 
 # Remove Microsoft Outlook (New)
 try {
@@ -44,4 +44,4 @@ catch {
 }
 
 # End of script
-Write-Log "OM-UserLogonScript v$scriptVersion execution completed."
+Write-Log "UserLogonScript v$scriptVersion execution completed."

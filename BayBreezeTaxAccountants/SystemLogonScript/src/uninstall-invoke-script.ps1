@@ -1,12 +1,12 @@
 # Remove the scheduled task
-Unregister-ScheduledTask -TaskName 'OM-SystemLogonScript' -Confirm:$false
+Unregister-ScheduledTask -TaskName 'SystemLogonScript' -Confirm:$false
 
 # Remove the downloaded script
-$localPath = 'C:\ProgramData\OptimumMovement\OM-SystemLogonScript.ps1'
+$localPath = 'C:\ProgramData\ITSolver\SystemLogonScript.ps1'
 Remove-Item -Path $localPath -Force -ErrorAction SilentlyContinue
 
-# Remove the OptimumMovement directory if it's empty
-$directoryPath = 'C:\ProgramData\OptimumMovement'
+# Remove the ITSolver directory if it's empty
+$directoryPath = 'C:\ProgramData\ITSolver'
 if (Test-Path $directoryPath) {
     $isEmpty = @(Get-ChildItem -Path $directoryPath -Force).Count -eq 0
     if ($isEmpty) {
@@ -14,4 +14,4 @@ if (Test-Path $directoryPath) {
     }
 }
 
-Write-Host 'OptimumMovement LogonScript has been uninstalled.'
+Write-Host 'SystemLogonScript has been uninstalled.'
